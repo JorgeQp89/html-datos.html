@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML de Datos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Detalles de la Película/Serie</h1>
+    <div id="content"></div>
+  </div>
+
+  <script>
+    // Recibir datos enviados por GET
+    window.onload = function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const encodedData = urlParams.get('data');
+
+      if (!encodedData) {
+        document.getElementById('content').innerHTML = '<p>No se recibieron datos.</p>';
+        return;
+      }
+
+      // Decodificar los datos
+      const data = JSON.parse(decodeURIComponent(encodedData));
+
+      // Generar el HTML con los datos recibidos
+      const html = `
+        <h2>${data.title}</h2>
+        <p>Año: ${data.year}</p>
+        <p>Valoración: ${data.rating} ⭐</p>
+        <p>Resumen: ${data.summary}</p>
+        <img src="${data.poster}" alt="Imagen portada">
+      `;
+
+      document.getElementById('content').innerHTML = html;
+    };
+  </script>
+</body>
+</html>
